@@ -1,5 +1,30 @@
 <h1>{{ post.title }}</h1>
 <p>{{ post.content }}</p>
-<p><small>Published on {{ post.created_at }}</small></p>
 
-<a href="/">Back to posts</a>
+<hr>
+
+<h3>Comments</h3>
+
+{% for comment in comments %}
+    <p>
+        <strong>{{ comment.author }}</strong><br>
+        {{ comment.content }}<br>
+        <small>{{ comment.created_at }}</small>
+    </p>
+    <hr>
+{% empty %}
+    <p>No comments yet.</p>
+{% endfor %}
+
+{% if user.is_authenticated %}
+    <h3>Add a comment</h3>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Post Comment</button>
+    </form>
+{% else %}
+    <p>
+        <a href="{% url 'login' %}">Login</a> to add a comment.
+    </p>
+{% endif %}
