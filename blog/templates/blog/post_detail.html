@@ -1,6 +1,12 @@
 <h1>{{ post.title }}</h1>
 <p>{{ post.content }}</p>
 
+<!-- EDIT AND DELETE BUTTONS (only for author or staff) -->
+{% if user == post.author or user.is_staff %}
+    <a href="{% url 'edit_post' post.pk %}">Edit Post</a>
+    <a href="{% url 'delete_post' post.pk %}">Delete Post</a>
+{% endif %}
+
 <hr>
 
 <h3>Comments</h3>

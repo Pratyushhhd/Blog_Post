@@ -8,6 +8,21 @@ from django.http import HttpResponseForbidden
 from .models import Post
 from .forms import CommentForm
 
+# Delete Post
+# =====================
+@login_required
+def delete_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+
+    # Only author or staff/admin can delete
+    if request.user != post.author and not request.user.is_staff:
+        return HttpResponseForbidden("You are not allowed to delete this post.")
+
+    if request.method == 'POST':
+        post.delete()
+        return redirect('post_list')
+
+    return render(request, 'blog/delete_post.html', {'post': post})
 
 # =====================
 # Signup View
@@ -17,8 +32,9 @@ def signup(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)  # auto-login after signup
+            login(request, user)
             return redirect('post_list')
+        # else: form will contain errors
     else:
         form = UserCreationForm()
     return render(request, 'registration/signup.html', {'form': form})
