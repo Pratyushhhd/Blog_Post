@@ -1,10 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ post.title }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: auto;
+            line-height: 1.6;
+        }
+        .post-meta {
+            color: gray;
+            font-size: 14px;
+        }
+        .actions a {
+            margin-right: 10px;
+            text-decoration: none;
+            color: #007bff;
+        }
+        .comment {
+            margin-bottom: 15px;
+        }
+        .comment small {
+            color: gray;
+        }
+    </style>
+</head>
+<body>
+
 <h1>{{ post.title }}</h1>
+<p class="post-meta">By {{ post.author }} | {{ post.created_at }}</p>
+
 <p>{{ post.content }}</p>
 
-<!-- EDIT AND DELETE BUTTONS (only for author or staff) -->
+<!-- Edit / Delete -->
 {% if user == post.author or user.is_staff %}
-    <a href="{% url 'edit_post' post.pk %}">Edit Post</a>
-    <a href="{% url 'delete_post' post.pk %}">Delete Post</a>
+<div class="actions">
+    <a href="{% url 'edit_post' post.pk %}">✏️ Edit</a>
+    <a href="{% url 'delete_post' post.pk %}">🗑 Delete</a>
+</div>
 {% endif %}
 
 <hr>
@@ -12,25 +46,27 @@
 <h3>Comments</h3>
 
 {% for comment in comments %}
-    <p>
-        <strong>{{ comment.author }}</strong><br>
-        {{ comment.content }}<br>
-        <small>{{ comment.created_at }}</small>
-    </p>
-    <hr>
+<div class="comment">
+    <strong>{{ comment.author }}</strong><br>
+    {{ comment.content }}<br>
+    <small>{{ comment.created_at }}</small>
+</div>
 {% empty %}
-    <p>No comments yet.</p>
+<p>No comments yet.</p>
 {% endfor %}
 
+<hr>
+
 {% if user.is_authenticated %}
-    <h3>Add a comment</h3>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Post Comment</button>
-    </form>
+<h3>Add a comment</h3>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Post Comment</button>
+</form>
 {% else %}
-    <p>
-        <a href="{% url 'login' %}">Login</a> to add a comment.
-    </p>
+<p><a href="{% url 'login' %}">Login</a> to add a comment.</p>
 {% endif %}
+
+</body>
+</html>

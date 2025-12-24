@@ -1,13 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Blog</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: auto;
+        }
+        .post {
+            margin-bottom: 30px;
+        }
+        .post h2 a {
+            text-decoration: none;
+            color: #333;
+        }
+        .post h2 a:hover {
+            color: #007bff;
+        }
+        .post-meta {
+            color: gray;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
 <h1>My Blog</h1>
 
 {% for post in posts %}
-  <h2>
-    <a href="{% url 'post_detail' post.id %}">
-      {{ post.title }}
-    </a>
-  </h2>
-  <p>{{ post.content|truncatewords:20 }}</p>
-  <hr>
+<div class="post">
+    <h2>
+        <a href="{% url 'post_detail' post.id %}">
+            {{ post.title }}
+        </a>
+    </h2>
+    <p class="post-meta">By {{ post.author }} | {{ post.created_at }}</p>
+    <p>{{ post.content|truncatewords:20 }}</p>
+</div>
+<hr>
 {% empty %}
-  <p>No posts available.</p>
+<p>No posts available.</p>
 {% endfor %}
+
+</body>
+</html>
