@@ -2,7 +2,18 @@
 
 <form method="post">
   {% csrf_token %}
-  <input type="text" name="title" value="{{ post.title }}"><br><br>
-  <textarea name="content">{{ post.content }}</textarea><br><br>
-  <button type="submit">Update</button>
+
+  <input type="text" name="title" value="{{ post.title }}" required style="width:100%; padding:5px;"><br><br>
+
+  <textarea name="content" required style="width:100%; padding:5px; height:150px;">{{ post.content }}</textarea><br><br>
+
+  <label>
+    Status:
+    <select name="status">
+      <option value="draft" {% if post.status == 'draft' %}selected{% endif %}>Draft</option>
+      <option value="published" {% if post.status == 'published' %}selected{% endif %}>Published</option>
+    </select>
+  </label><br><br>
+
+  <button type="submit" style="padding:5px 10px;">Update</button>
 </form>

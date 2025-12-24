@@ -8,21 +8,32 @@
             max-width: 800px;
             margin: auto;
             line-height: 1.6;
+            padding: 10px;
         }
         .post-meta {
             color: gray;
             font-size: 14px;
         }
-        .actions a {
+        .actions a, .like-button {
             margin-right: 10px;
             text-decoration: none;
             color: #007bff;
+            cursor: pointer;
+        }
+        .like-button {
+            border: none;
+            background: none;
+            font-size: 16px;
         }
         .comment {
             margin-bottom: 15px;
         }
         .comment small {
             color: gray;
+        }
+        form button {
+            padding: 5px 10px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -41,10 +52,24 @@
 </div>
 {% endif %}
 
+<!-- Like / Favorite -->
+{% if user.is_authenticated %}
+<form action="{% url 'like_post' post.pk %}" method="post" style="display:inline;">
+    {% csrf_token %}
+    {% if liked %}
+        <button type="submit" class="like-button">❤️ Unlike</button>
+    {% else %}
+        <button type="submit" class="like-button">🤍 Like</button>
+    {% endif %}
+</form>
+<span>{{ total_likes }} like{{ total_likes|pluralize }}</span>
+{% else %}
+<p><a href="{% url 'login' %}">Login</a> to like this post.</p>
+{% endif %}
+
 <hr>
 
 <h3>Comments</h3>
-
 {% for comment in comments %}
 <div class="comment">
     <strong>{{ comment.author }}</strong><br>

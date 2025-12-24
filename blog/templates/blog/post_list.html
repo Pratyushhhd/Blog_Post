@@ -7,6 +7,7 @@
             font-family: Arial, sans-serif;
             max-width: 800px;
             margin: auto;
+            padding: 10px;
         }
         .post {
             margin-bottom: 30px;
@@ -22,11 +23,36 @@
             color: gray;
             font-size: 14px;
         }
+        .pagination a, .pagination span {
+            margin: 0 5px;
+            text-decoration: none;
+            color: #007bff;
+        }
+        .pagination .current {
+            font-weight: bold;
+            color: black;
+        }
+        form.search-form {
+            margin-bottom: 20px;
+        }
+        form.search-form input[type="text"] {
+            padding: 5px;
+            width: 70%;
+        }
+        form.search-form button {
+            padding: 5px 10px;
+        }
     </style>
 </head>
 <body>
 
 <h1>My Blog</h1>
+
+<!-- Search Form -->
+<form method="get" class="search-form">
+    <input type="text" name="q" placeholder="Search posts..." value="{{ search_query }}">
+    <button type="submit">Search</button>
+</form>
 
 {% for post in posts %}
 <div class="post">
@@ -38,10 +64,30 @@
     <p class="post-meta">By {{ post.author }} | {{ post.created_at }}</p>
     <p>{{ post.content|truncatewords:20 }}</p>
 </div>
-<hr>
 {% empty %}
 <p>No posts available.</p>
 {% endfor %}
+
+<!-- Pagination -->
+{% if page_obj.has_other_pages %}
+<div class="pagination">
+    {% if page_obj.has_previous %}
+        <a href="?q={{ search_query }}&page={{ page_obj.previous_page_number }}">« Previous</a>
+    {% endif %}
+
+    {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+            <span class="current">{{ num }}</span>
+        {% else %}
+            <a href="?q={{ search_query }}&page={{ num }}">{{ num }}</a>
+        {% endif %}
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+        <a href="?q={{ search_query }}&page={{ page_obj.next_page_number }}">Next »</a>
+    {% endif %}
+</div>
+{% endif %}
 
 </body>
 </html>

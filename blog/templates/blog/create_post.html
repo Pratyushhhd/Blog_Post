@@ -3,9 +3,17 @@
 <form method="post">
   {% csrf_token %}
 
-  <input type="text" name="title" placeholder="Title"><br><br>
+  <input type="text" name="title" placeholder="Title" required style="width:100%; padding:5px;"><br><br>
 
-  <textarea name="content" placeholder="Content"></textarea><br><br>
+  <textarea name="content" placeholder="Content" required style="width:100%; padding:5px; height:150px;"></textarea><br><br>
 
-  <button type="submit">Create</button>
+  <label>
+    Status:
+    <select name="status">
+      <option value="draft">Draft</option>
+      <option value="published" selected>Published</option>
+    </select>
+  </label><br><br>
+
+  <button type="submit" style="padding:5px 10px;">Create</button>
 </form>
