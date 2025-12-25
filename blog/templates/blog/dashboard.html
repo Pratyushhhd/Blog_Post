@@ -1,0 +1,30 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}My Dashboard{% endblock %}
+
+{% block content %}
+<h2>👤 Welcome, {{ user.username }}</h2>
+
+<h3>📝 My Posts</h3>
+
+{% if posts %}
+    {% for post in posts %}
+        <div style="margin-bottom: 1em;">
+            <h4>{{ post.title }}</h4>
+            <p>Status: <strong>{{ post.status }}</strong></p>
+            <p>{{ post.content|truncatewords:20 }}</p>
+
+            <a href="{% url 'post_detail' post.pk %}">View</a> |
+            <a href="{% url 'edit_post' post.pk %}">Edit</a> |
+            <a href="{% url 'delete_post' post.pk %}">Delete</a>
+        </div>
+        <hr>
+    {% endfor %}
+{% else %}
+    <p>You haven’t written any posts yet.</p>
+{% endif %}
+
+<a href="{% url 'create_post' %}">
+    <button>➕ Create New Post</button>
+</a>
+{% endblock %}

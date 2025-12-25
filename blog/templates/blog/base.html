@@ -4,69 +4,89 @@
     <meta charset="UTF-8">
     <title>{% block title %}My Site{% endblock %}</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
-            margin: 0;
-            padding: 0;
-        }
-        header, footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 1em;
-        }
-        nav {
-            margin-top: 0.5em;
-        }
-        nav ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-        }
-        nav li {
-            margin: 0 10px;
-        }
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        nav a:hover {
-            text-decoration: underline;
-        }
-        main {
-            max-width: 800px;
-            margin: 2em auto;
-            padding: 2em;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        button {
-            padding: 0.5em 1em;
-            border: none;
-            background-color: #007BFF;
-            color: white;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        input {
-            padding: 0.5em;
-            width: 100%;
-            margin-bottom: 1em;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        .error {
-            color: red;
-        }
-    </style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #F8F9FA; /* Light Gray */
+    color: #333333; /* Body text */
+    margin: 0;
+    padding: 0;
+}
+
+header, footer {
+    background-color: #0A1F44; /* Navy Blue */
+    color: white;
+    text-align: center;
+    padding: 1em;
+}
+
+nav {
+    margin-top: 0.5em;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+nav li {
+    margin: 0 10px;
+}
+
+nav a {
+    color: white; /* White text for navbar */
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: #1D4ED8; /* Royal Blue hover */
+}
+
+main {
+    max-width: 900px;
+    margin: 2em auto;
+    padding: 2em;
+    background-color: #FFFFFF; /* White card */
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #0A1F44; /* Headings */
+    margin-top: 0;
+}
+
+button {
+    padding: 0.6em 1.2em;
+    border: none;
+    background-color: #1D4ED8; /* Royal Blue */
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #2563EB; /* Hover effect */
+}
+
+input {
+    padding: 0.6em;
+    width: 100%;
+    margin-bottom: 1em;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.error {
+    color: red;
+}
+</style>
+
 </head>
 <body>
     <header>
@@ -75,8 +95,9 @@
             <ul>
                 <li><a href="{% url 'post_list' %}">Home</a></li>
                 {% if user.is_authenticated %}
-                    <li><a href="{% url 'create_post' %}">Create Post</a></li>
-                    <li><a href="{% url 'logout' %}">Logout ({{ user.username }})</a></li>
+                <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                <li><a href="{% url 'create_post' %}">Create Post</a></li>
+                <li><a href="{% url 'logout' %}">Logout ({{ user.username }})</a></li>
                 {% else %}
                     <li><a href="{% url 'login' %}">Login</a></li>
                     <li><a href="{% url 'signup' %}">Sign Up</a></li>

@@ -1,19 +1,99 @@
-<h2>Create Post</h2>
+<style>
+  .create-post-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 60px;
+  }
 
-<form method="post">
-  {% csrf_token %}
+  .create-post-card {
+    width: 100%;
+    max-width: 700px;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  }
 
-  <input type="text" name="title" placeholder="Title" required style="width:100%; padding:5px;"><br><br>
+  .create-post-card h2 {
+    margin-bottom: 25px;
+    font-weight: 600;
+  }
 
-  <textarea name="content" placeholder="Content" required style="width:100%; padding:5px; height:150px;"></textarea><br><br>
+  .form-group {
+    margin-bottom: 20px;
+  }
 
-  <label>
-    Status:
-    <select name="status">
-      <option value="draft">Draft</option>
-      <option value="published" selected>Published</option>
-    </select>
-  </label><br><br>
+  .create-post-card input,
+  .create-post-card textarea,
+  .create-post-card select {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    font-size: 15px;
+  }
 
-  <button type="submit" style="padding:5px 10px;">Create</button>
-</form>
+  .create-post-card textarea {
+    min-height: 180px;
+    resize: vertical;
+  }
+
+  .create-post-card input:focus,
+  .create-post-card textarea:focus,
+  .create-post-card select:focus {
+    outline: none;
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
+  }
+
+  .create-post-card button {
+    background: #0d6efd;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+  }
+
+  .create-post-card button:hover {
+    background: #0b5ed7;
+  }
+</style>
+
+<div class="create-post-wrapper">
+  <div class="create-post-card">
+    <h2>Create New Post</h2>
+
+    <form method="post">
+      {% csrf_token %}
+
+      <div class="form-group">
+        <input
+          type="text"
+          name="title"
+          placeholder="Post title"
+          required
+        >
+      </div>
+
+      <div class="form-group">
+        <textarea
+          name="content"
+          placeholder="Write your content here..."
+          required
+        ></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Status</label>
+        <select name="status">
+          <option value="draft">Draft</option>
+          <option value="published" selected>Published</option>
+        </select>
+      </div>
+
+      <button type="submit">Create Post</button>
+    </form>
+  </div>
+</div>

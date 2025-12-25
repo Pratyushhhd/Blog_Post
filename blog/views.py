@@ -79,8 +79,15 @@ def post_list(request):
 # =====================
 # Post Detail
 # =====================
+
 def post_detail(request, pk):
-    post = get_object_or_404(Post, pk=pk, status='published')
+    # Fetch the post regardless of status
+    post = get_object_or_404(Post, pk=pk)
+
+    # If the post is a draft, only allow the author or staff to view
+    if post.status == 'draft' and not (request.user == post.author or request.user.is_staff):
+        raise Http404("This post is not published.")
+
     comments = post.comments.all()
 
     if request.method == "POST":
@@ -97,7 +104,6 @@ def post_detail(request, pk):
     else:
         form = CommentForm()
 
-    # Check if user liked the post
     liked = False
     if request.user.is_authenticated:
         liked = post.likes.filter(id=request.user.id).exists()
@@ -165,3 +171,13 @@ def like_post(request, pk):
         post.likes.add(request.user)
     return redirect('post_detail', pk=pk)
 
+# =====================
+# User Dashboard
+# =====================
+@login_required
+def dashboard(request):
+    posts = Post.objects.filter(author=request.user).order_by('-created_at')
+
+    return render(request, 'blog/dashboard.html', {
+        'posts': posts
+    })
