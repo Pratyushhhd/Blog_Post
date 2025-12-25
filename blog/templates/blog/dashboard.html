@@ -3,27 +3,36 @@
 {% block title %}My Dashboard{% endblock %}
 
 {% block content %}
-<h2>👤 Welcome, {{ user.username }}</h2>
 
-<h3>📝 My Posts</h3>
+<div class="dashboard-header">
+    <h2>👋 Welcome, {{ user.username }}</h2>
+    <a href="{% url 'create_post' %}" class="btn-primary">➕ Create New Post</a>
+</div>
+
+<h3 class="section-title">📝 My Posts</h3>
 
 {% if posts %}
-    {% for post in posts %}
-        <div style="margin-bottom: 1em;">
-            <h4>{{ post.title }}</h4>
-            <p>Status: <strong>{{ post.status }}</strong></p>
-            <p>{{ post.content|truncatewords:20 }}</p>
-            <a href="{% url 'post_detail' post.pk %}">View</a> |
-            <a href="{% url 'edit_post' post.pk %}">Edit</a> |
-            <a href="{% url 'delete_post' post.pk %}">Delete</a>
-        </div>
-        <hr>
-    {% endfor %}
+    <div class="post-grid">
+        {% for post in posts %}
+            <div class="post-card">
+                <h4>{{ post.title }}</h4>
+
+                <span class="status {{ post.status }}">
+                    {{ post.status|title }}
+                </span>
+
+                <p>{{ post.content|truncatewords:20 }}</p>
+
+                <div class="post-actions">
+                    <a href="{% url 'post_detail' post.pk %}" class="btn btn-view">View</a>
+                    <a href="{% url 'edit_post' post.pk %}" class="btn btn-edit">Edit</a>
+                    <a href="{% url 'delete_post' post.pk %}" class="btn btn-delete">Delete</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 {% else %}
     <p>You haven’t written any posts yet.</p>
 {% endif %}
 
-<a href="{% url 'create_post' %}">
-    <button>➕ Create New Post</button>
-</a>
 {% endblock %}
