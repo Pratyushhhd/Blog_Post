@@ -84,7 +84,6 @@ def post_detail(request, pk):
     # Fetch the post regardless of status
     post = get_object_or_404(Post, pk=pk)
 
-    # If the post is a draft, only allow the author or staff to view
     if post.status == 'draft' and not (request.user == post.author or request.user.is_staff):
         raise Http404("This post is not published.")
 
@@ -125,7 +124,7 @@ def create_post(request):
     if request.method == 'POST':
         title = request.POST.get('title')
         content = request.POST.get('content')
-        status = request.POST.get('status', 'draft')  # draft or published
+        status = request.POST.get('status', 'draft')  
 
         if title and content:
             Post.objects.create(
