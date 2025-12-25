@@ -11,7 +11,9 @@
             background-color: #F8F9FA;
             color: #333333;
             margin: 0;
-            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         a {
@@ -27,6 +29,7 @@
         header h1 {
             color: #fff;
             margin: 0;
+            text-align: center;
         }
 
         nav {
@@ -55,12 +58,18 @@
             background-color: rgba(255, 255, 255, 0.15);
         }
 
-        /* ===== Main Content ===== */
+        /* ===== Main Layout (WIDE) ===== */
         main {
-            max-width: 1000px;
-            margin: 3em auto;
+            max-width: 1200px;
+            margin: 2.5em auto;
+            padding: 0 20px;
+            flex: 1;
+        }
+
+        /* ===== Content Box (optional wrapper) ===== */
+        .content-box {
+            background: #FFFFFF;
             padding: 2.5em;
-            background-color: #FFFFFF;
             border-radius: 14px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.08);
         }
@@ -103,8 +112,8 @@
             background-color: #0A1F44;
             color: white;
             text-align: center;
-            padding: 1em;
-            margin-top: 4em;
+            padding: 0.6em 0;
+            font-size: 0.9em;
         }
 
         /* ===== Dashboard Styles ===== */
@@ -112,7 +121,12 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 20px; /* ✅ GAP ADDED HERE */
             margin-bottom: 2em;
+            background: #fff;
+            padding: 1.5em 2em;
+            border-radius: 14px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.06);
         }
 
         .section-title {

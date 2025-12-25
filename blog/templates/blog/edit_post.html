@@ -1,19 +1,112 @@
-<h2>Edit Post</h2>
+<style>
+  .create-post-wrapper {
+    display: flex;
+    justify-content: center;
+    margin: 60px 20px;
+  }
 
-<form method="post">
-  {% csrf_token %}
+  .create-post-card {
+    width: 100%;
+    max-width: 720px;
+    background: #ffffff;
+    padding: 35px 40px;
+    border-radius: 16px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+  }
 
-  <input type="text" name="title" value="{{ post.title }}" required style="width:100%; padding:5px;"><br><br>
+  .create-post-card h2 {
+    font-weight: 700;
+    margin-bottom: 25px;
+    color: #1f2937;
+  }
 
-  <textarea name="content" required style="width:100%; padding:5px; height:150px;">{{ post.content }}</textarea><br><br>
+  .form-group {
+    margin-bottom: 22px;
+  }
 
-  <label>
-    Status:
-    <select name="status">
-      <option value="draft" {% if post.status == 'draft' %}selected{% endif %}>Draft</option>
-      <option value="published" {% if post.status == 'published' %}selected{% endif %}>Published</option>
-    </select>
-  </label><br><br>
+  .create-post-card input,
+  .create-post-card textarea,
+  .create-post-card select {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid #d1d5db;
+    font-size: 15px;
+    transition: 0.2s ease;
+  }
 
-  <button type="submit" style="padding:5px 10px;">Update</button>
-</form>
+  .create-post-card textarea {
+    min-height: 180px;
+    resize: vertical;
+  }
+
+  .create-post-card input:focus,
+  .create-post-card textarea:focus,
+  .create-post-card select:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 25px;
+  }
+
+  .create-post-card button {
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.2s ease;
+  }
+
+  .create-post-card button:hover {
+    background: #1e4fd8;
+  }
+</style>
+
+<div class="create-post-wrapper">
+  <div class="create-post-card">
+
+    <h2>✏️ Edit Post</h2>
+
+    <form method="post">
+      {% csrf_token %}
+
+      <div class="form-group">
+        <input
+          type="text"
+          name="title"
+          value="{{ post.title }}"
+          required
+        >
+      </div>
+
+      <div class="form-group">
+        <textarea
+          name="content"
+          required
+        >{{ post.content }}</textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Status</label>
+        <select name="status">
+          <option value="draft" {% if post.status == 'draft' %}selected{% endif %}>Draft</option>
+          <option value="published" {% if post.status == 'published' %}selected{% endif %}>Published</option>
+        </select>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit">Update Post</button>
+      </div>
+
+    </form>
+  </div>
+</div>
