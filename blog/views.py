@@ -164,3 +164,4 @@ def like_post(request, pk):
     else:
         post.likes.add(request.user)
     return redirect('post_detail', pk=pk)
+

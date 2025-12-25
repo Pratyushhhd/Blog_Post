@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<h2>Welcome to My Blog!</h2>
+<p>Check out the latest posts below:</p>
+
+{% if posts %}
+    {% for post in posts %}
+        <h3>{{ post.title }}</h3>
+        <p>{{ post.content|truncatewords:30 }}</p>
+        <a href="{% url 'post_detail' post.pk %}">Read More</a>
+        <hr>
+    {% endfor %}
+{% else %}
+    <p>No posts yet.</p>
+{% endif %}
+{% endblock %}
