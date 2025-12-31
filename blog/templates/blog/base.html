@@ -214,7 +214,27 @@
             {% if user.is_authenticated %}
                 <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
                 <li><a href="{% url 'create_post' %}">Create Post</a></li>
-                <li><a href="{% url 'logout' %}">Logout ({{ user.username }})</a></li>
+<li>
+    <form method="POST" action="{% url 'logout' %}" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit"
+            style="
+                background: transparent;
+                border: none;
+                color: white;
+                font-weight: 600;
+                padding: 6px 14px;
+                border-radius: 6px;
+                cursor: pointer;
+                font-size: 0.9em;
+            "
+            onmouseover="this.style.backgroundColor='rgba(255,255,255,0.15)'"
+            onmouseout="this.style.backgroundColor='transparent'"
+        >
+            Logout ({{ user.username }})
+        </button>
+    </form>
+</li>
             {% else %}
                 <li><a href="{% url 'login' %}">Login</a></li>
                 <li><a href="{% url 'signup' %}">Sign Up</a></li>
