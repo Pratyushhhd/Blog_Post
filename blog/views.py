@@ -10,6 +10,10 @@ from django.db.models import Q
 from .models import Post
 from .forms import CommentForm
 
+from django.contrib.auth import logout
+from django.shortcuts import redirect
+from django.views import View
+
 # =====================
 # Delete Post
 # =====================
@@ -50,6 +54,17 @@ class CustomLoginView(LoginView):
     def get_success_url(self):
         return reverse_lazy('post_list')
 
+
+
+
+class CustomLogoutView(View):
+    def get(self, request, *args, **kwargs):
+        logout(request)
+        return redirect('login')
+
+    def post(self, request, *args, **kwargs):
+        logout(request)
+        return redirect('login')
 
 # =====================
 # Post List with Search & Pagination
@@ -124,7 +139,7 @@ def create_post(request):
     if request.method == 'POST':
         title = request.POST.get('title')
         content = request.POST.get('content')
-        status = request.POST.get('status', 'draft')  
+        status = request.POST.get('status', 'draft')
 
         if title and content:
             Post.objects.create(
