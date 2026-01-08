@@ -28,6 +28,8 @@ DEBUG = True
 ALLOWED_HOSTS = ['pratyushhhd.pythonanywhere.com']
 
 
+
+
 # Application definition
 
 INSTALLED_APPS = [

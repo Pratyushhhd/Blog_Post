@@ -1,4 +1,62 @@
+{% extends 'blog/base.html' %}
+{% block title %}Create New Post{% endblock %}
+
+{% block content %}
+
 <style>
+  /* ===== Navbar ===== */
+  .navbar {
+    background: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    padding: 14px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .navbar .logo {
+    font-size: 20px;
+    font-weight: 700;
+    color: #2563eb;
+    text-decoration: none;
+  }
+
+  .navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 22px;
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;
+  }
+
+  .navbar ul li a {
+    text-decoration: none;
+    color: #1f2937;
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  .navbar ul li a:hover {
+    color: #2563eb;
+  }
+
+  .navbar .nav-btn {
+    background: #2563eb;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .navbar .nav-btn:hover {
+    background: #1e4fd8;
+  }
+
+  /* ===== Create Post ===== */
   .create-post-wrapper {
     display: flex;
     justify-content: center;
@@ -12,12 +70,14 @@
     padding: 35px 40px;
     border-radius: 16px;
     box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+    box-sizing: border-box;
   }
 
   .create-post-card h2 {
     font-weight: 700;
     margin-bottom: 25px;
     color: #1f2937;
+    font-size: 24px;
   }
 
   .form-group {
@@ -32,7 +92,7 @@
     border-radius: 10px;
     border: 1px solid #d1d5db;
     font-size: 15px;
-    transition: 0.2s ease;
+    box-sizing: border-box;
   }
 
   .create-post-card textarea {
@@ -63,34 +123,89 @@
     font-size: 15px;
     font-weight: 500;
     cursor: pointer;
-    transition: 0.2s ease;
   }
 
   .create-post-card button:hover {
     background: #1e4fd8;
   }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 768px) {
+    .navbar {
+      justify-content: space-between;
+    }
+
+    .navbar ul {
+      gap: 16px;
+    }
+
+    .create-post-card {
+      padding: 25px 20px;
+    }
+
+    .create-post-card h2 {
+      font-size: 22px;
+    }
+
+    .create-post-card input,
+    .create-post-card textarea,
+    .create-post-card select {
+      font-size: 14px;
+      padding: 10px 12px;
+    }
+
+    .create-post-card button {
+      font-size: 14px;
+      padding: 8px 18px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .navbar ul {
+      flex-direction: column;
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    .create-post-wrapper {
+      margin: 40px 10px;
+    }
+
+    .create-post-card {
+      padding: 20px 15px;
+    }
+
+    .create-post-card h2 {
+      font-size: 20px;
+      text-align: center;
+    }
+
+    .form-actions {
+      justify-content: center;
+    }
+  }
 </style>
 
+<!-- ===== Create Post Form ===== -->
 <div class="create-post-wrapper">
   <div class="create-post-card">
-
     <h2>📝 Create New Post</h2>
 
     <form method="post">
       {% csrf_token %}
 
       <div class="form-group">
-        <input 
-          type="text" 
-          name="title" 
+        <input
+          type="text"
+          name="title"
           placeholder="Post title"
           required
         >
       </div>
 
       <div class="form-group">
-        <textarea 
-          name="content" 
+        <textarea
+          name="content"
           placeholder="Write your content here..."
           required
         ></textarea>
@@ -111,3 +226,5 @@
     </form>
   </div>
 </div>
+
+{% endblock %}
